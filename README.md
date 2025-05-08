@@ -1,50 +1,88 @@
-# Welcome to your Expo app 👋
+# Tetris Expo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é um projeto do jogo Tetris desenvolvido com [Expo](https://expo.dev) e React Native.
 
-## Get started
+## Funcionalidades
 
-1. Install dependencies
+- Jogo Tetris clássico com controles por teclado e gestos (mobile)
+- Cadastro de usuário com nome e e-mail
+- Persistência de usuário local (AsyncStorage/localStorage)
+- Integração com backend para salvar dados do usuário
+- Interface responsiva para web e mobile
+
+## Instalação
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repo-tetris.git
+   cd seu-repo-tetris
+   ```
+
+2. Instale as dependências:
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. Inicie o app:
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Como jogar
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Web:** Use as setas do teclado para mover e girar as peças. Barra de espaço para queda rápida.
+- **Mobile:** Use gestos (arrastar para os lados, para cima e para baixo) para controlar as peças.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Cadastro de Usuário
 
-## Get a fresh project
+Ao iniciar o app, informe seu nome e e-mail. Os dados são salvos localmente e enviados para o backend (ver seção Backend).
 
-When you're ready, run:
+## Backend (opcional)
 
-```bash
-npm run reset-project
+Para salvar os dados do usuário em um banco MongoDB, utilize um backend Node.js/Express. Exemplo básico:
+
+```js
+// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+app.use(cors());
+app.use(express.json());
+mongoose.connect('mongodb://localhost:27017/tetris');
+const User = mongoose.model('User', { name: String, email: String, point: String, level: String });
+app.post('/api/user', async (req, res) => {
+  const user = await User.create(req.body);
+  res.json({ user });
+});
+app.listen(21029, () => console.log('Backend rodando na porta 21029'));
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Estrutura do Projeto
 
-## Learn more
+- **/app**: Código principal do app e rotas
+- **/components**: Componentes reutilizáveis (Menu, ThemedView, etc)
+- **/hooks**: Hooks customizados (ex: usePlayer)
+- **/business**: Lógica do jogo e utilitários (Input, Tetrominoes, etc)
+- **/assets**: Imagens e recursos estáticos
 
-To learn more about developing your project with Expo, look at the following resources:
+## Personalização
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Edite os arquivos em **/app** e **/components** para modificar o visual ou regras do jogo.
+- Para alterar a lógica das peças, veja **/business/Tetrominoes.ts**.
 
-## Join the community
+## Recursos
 
-Join our community of developers creating universal apps.
+- [Documentação Expo](https://docs.expo.dev/)
+- [React Native](https://reactnative.dev/)
+- [MongoDB Atlas](https://www.mongodb.com/atlas/database)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Licença
+
+MIT
+
+---
+Desenvolvido por [Seu Nome]
